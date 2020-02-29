@@ -1,0 +1,51 @@
+<h1>Nouvel employé</h1>
+
+<% if @employe.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@employe.errors.count, "error") %> prohibited
+      this employe from being saved:
+    </h2>
+    <ul>
+      <% @employe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with scope: :employe, url: employes_path, local: true do |f| %>
+   <%= label_tag :employe_nomE, "Nom" %>
+   <%= f.text_field :nomE %>
+
+   <%= label_tag :employe_prenomE, "Prénom" %>
+   <%= f.text_field :prenomE %>
+
+   <%= label_tag :employe_ageE, "Age" %>
+   <%= f.text_field :ageE %>
+
+   <%= label_tag :employe_mailE, "Adresse mail" %>
+   <%= f.email_field :mailE %>
+
+   <%= label_tag :employe_numTelE, "Numéro de téléphone" %>
+   <%= f.text_field :numTelE %>
+
+   <%= label_tag :employe_adresseE, "Adresse" %>
+   <%= f.text_area :adresseE %>
+
+   <%= label_tag :employe_nbAnneeExp, "Nombre d\'années d\'expérience" %>
+   <%= f.text_field :nbAnneeExp %>
+
+   <%= label_tag :employe_formation, "Formation" %>
+   <%= f.text_field :formation %>
+
+   <%= label_tag :employe_intituleContrat, "Intitulé contrat" %>
+   <%= f.text_field :intituleContrat %>
+
+   <%= label_tag :employe_salaireBrut, "Salaire brut" %>
+   <%= f.text_field :salaireBrut %>
+
+   <%= label_tag :employe_dateDebutE, "Date de début du contrat" %>
+   <%= f.date_field :dateDebutE %>
+
+   <%= f.submit %>
+<% end %>

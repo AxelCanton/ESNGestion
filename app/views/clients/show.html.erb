@@ -1,0 +1,24 @@
+<% if @client.type=='Particulier' %>
+  <header><h1><%= @client.nomP %> <%=@client.prenomP%></h1></header>
+  <main>
+    <p>Adresse email : <%= @client.mailC %></p>
+    <p>Numéro de téléphone : <%= @client.numTelC %></p>
+    <p>Adresse : <%= @client.adresseC %></p>
+
+    <%= link_to "Retour", clients_path %>
+  </main>
+
+<% elsif @client.type=='Entreprise' %>
+  <header><h1><%= @client.nomEntreprise %></header>
+  <main>
+    <p>Numéro Siret : <%= @client.numSiret %></p>
+    <p>Adresse email : <%= @client.mailC %></p>
+    <p>Numéro de téléphone : <%= @client.numTelC %></p>
+    <p>Adresse : <%= @client.adresseC %></p>
+    <p>Nom référent : <%= @client.nomReferent %></p>
+
+    <%= link_to "Retour", clients_path %>
+  </main>
+<% else %>
+  <h3> <%=@client.type %> </h3>
+<% end %>

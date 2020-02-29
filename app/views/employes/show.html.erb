@@ -1,0 +1,16 @@
+<header><h1><%= @employe.nomE %> <%=@employe.prenomE%></h1></header>
+<main>
+  <p>Age : <%= @employe.ageE %></p>
+  <p>Adresse email : <%= @employe.mailE %></p>
+  <p>Numéro de téléphone : <%= @employe.numTelE %></p>
+  <p>Adresse : <%= @employe.adresseE %></p>
+  <p>Date de début du contrat : <%= @employe.dateDebutE.strftime("%d/%m/%Y") %></p>
+  <p>Date fin de contrat :
+  <% if @employe.dateFinE.nil? %>
+     indéterminée
+  <% else %>
+    <%= @employe.dateFinE.strftime("%d/%m/%Y") %>
+  <% end %></p>
+
+  <%= link_to "Retour", employes_path %>
+</main>

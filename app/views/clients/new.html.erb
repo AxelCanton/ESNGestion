@@ -1,0 +1,75 @@
+
+<h1>Nouveau client</h1>
+
+<h2>Entreprise</h2>
+<% if @entreprise.present? %>
+  <% if @entreprise.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@entreprise.errors.count, "error") %> prohibited
+        this employe from being saved:
+      </h2>
+      <ul>
+        <% @entreprise.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+<%= form_with scope: :entreprise, url: 'entreprises', local: true do |f| %>
+   <%= label_tag :entreprise_nomEntreprise, "Nom" %>
+   <%= f.text_field :nomEntreprise %>
+
+   <%= label_tag :entreprise_numSiret, "Numéro Siret" %>
+   <%= f.text_field :numSiret %>
+
+   <%= label_tag :entreprise_adresseC, "Adresse" %>
+   <%= f.text_field :adresseC %>
+
+   <%= label_tag :entreprise_mailC, "Adresse mail" %>
+   <%= f.email_field :mailC %>
+
+   <%= label_tag :entreprise_numTelC, "Numéro de téléphone" %>
+   <%= f.text_field :numTelC %>
+
+   <%= label_tag :entreprise_nomReferent, "Nom référent" %>
+   <%= f.text_field :nomReferent %>
+
+   <%= f.submit %>
+<% end %>
+
+<h2>Particulier</h2>
+<% if @particulier.present? %>
+  <% if @particulier.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@particulier.errors.count, "error") %> prohibited
+        this employe from being saved:
+      </h2>
+      <ul>
+        <% @particulier.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+<%= form_with scope: :particulier, url: 'particuliers', local: true do |f| %>
+   <%= label_tag :particulier_nomP, "Nom" %>
+   <%= f.text_field :nomP %>
+
+   <%= label_tag :particulier_prenomP, "Prénom" %>
+   <%= f.text_field :prenomP %>
+
+   <%= label_tag :particulier_adresseC, "Adresse" %>
+   <%= f.text_field :adresseC %>
+
+   <%= label_tag :particulier_mailC, "Adresse mail" %>
+   <%= f.email_field :mailC %>
+
+   <%= label_tag :particulier_numTelC, "Numéro de téléphone" %>
+   <%= f.text_field :numTelC %>
+
+   <%= f.submit %>
+<% end %>
