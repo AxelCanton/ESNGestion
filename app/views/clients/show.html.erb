@@ -5,7 +5,7 @@
     <p>Numéro de téléphone : <%= @client.numTelC %></p>
     <p>Adresse : <%= @client.adresseC %></p>
 
-    <%= link_to "Retour", clients_path %>
+    <%= link_to "Retour", clients_particuliers_path %>
   </main>
 
 <% elsif @client.type=='Entreprise' %>
@@ -17,8 +17,8 @@
     <p>Adresse : <%= @client.adresseC %></p>
     <p>Nom référent : <%= @client.nomReferent %></p>
 
-    <%= link_to "Retour", clients_path %>
+    <%= link_to "Retour", clients_entreprises_path %>
   </main>
 <% else %>
-  <h3> <%=@client.type %> </h3>
+  <h3> Pas de client trouvé !</h3>
 <% end %>

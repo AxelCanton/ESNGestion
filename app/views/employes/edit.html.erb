@@ -1,4 +1,7 @@
-<h1>Changer les données de <%= @employe.nomE %> <%= @employe.prenomE/h1>
+<h1>Edit Article</h1>
+
+
+<h1>Changer les informations de <%= @employe.nomE %> <%= @employe.prenomE %></h1>
 
 <% if @employe.errors.any? %>
   <div id="error_explanation">
@@ -13,7 +16,7 @@
     </ul>
   </div>
 <% end %>
-<%= form_with scope: :employe, url: employes_path, local: true do |f| %>
+<%= form_with(model: @employe, method: :patch, local: true) do |f| %>
    <%= label_tag :employe_ageE, "Age" %>
    <%= f.text_field :ageE %>
 

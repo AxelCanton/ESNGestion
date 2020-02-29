@@ -35,6 +35,7 @@ class EmployesController < ApplicationController
   end
 
     def update
+      aa
       @employe = Article.find(params[:id])
 
         if @employe.update(param_employe)

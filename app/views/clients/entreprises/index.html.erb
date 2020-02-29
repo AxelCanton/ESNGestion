@@ -1,0 +1,20 @@
+<h1>Liste des entreprises</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+
+  </tr>
+
+  <% @entreprises.each do |ent| %>
+    <tr>
+      <td><%= ent.nomEntreprise %></td>
+      <td><%= link_to 'Informations', client_path(ent) %></td>
+      <td><%= link_to 'Supprimer', client_path(ent),
+              method: :delete,
+              data: { confirm: 'Êtes-vous sûr ?' } %></td>
+
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'Retour', clients_path %>

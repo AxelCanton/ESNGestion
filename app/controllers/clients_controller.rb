@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   def index
-    
+
   end
 
   def show
@@ -36,11 +36,12 @@ class ClientsController < ApplicationController
       end
   end
 
-  def show_entreprise
+  def index_entreprise
     @entreprises=Entreprise.all
+    render :template => "clients/entreprises/index.html.erb"
   end
 
-  def show_particulier
+  def index_particulier
     @particuliers=Particulier.all
     render :template => "clients/particuliers/index.html.erb"
   end
@@ -50,7 +51,19 @@ class ClientsController < ApplicationController
   end
 
   def destroy
+    @client = Client.find(params[:id])
+    if @client.type == 'Entreprise'
+      redirect = 0
+    else
+      redirect = 1
+    end
+    @client.destroy
 
+    if redirect == 0
+      redirect_to clients_entreprises_path
+    else
+      redirect_to clients_particuliers_path
+    end
   end
 
 

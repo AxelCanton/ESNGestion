@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'clients/particuliers', to: 'clients#show_particulier'
-  get 'clients/entreprises', to: 'clients#show_entreprise'
+  get 'clients/particuliers', to: 'clients#index_particulier'
+  get 'clients/entreprises', to: 'clients#index_entreprise'
   resources :employes, :equipes, :clients, :contrat_clients
   post 'clients/particuliers', to: 'clients#create_particulier'
   post 'clients/entreprises', to: 'clients#create_entreprise'

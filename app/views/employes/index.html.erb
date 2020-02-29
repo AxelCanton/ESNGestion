@@ -1,12 +1,14 @@
 <h1>Liste des employés</h1>
 
 <table>
+  <thead>
   <tr>
     <th>Nom</th>
     <th>Prénom</th>
     <th>Intitulé contrat</th>
   </tr>
-
+</thead>
+<tbody>
   <% @employes.each do |emp| %>
     <tr>
       <td><%= emp.nomE %></td>
@@ -18,5 +20,6 @@
               data: { confirm: 'Êtes-vous sûr ?' } %></td>
     </tr>
   <% end %>
+</tbody>
 </table>
-<%= link_to 'Nouveau employé', new_client_path %>
+<%= link_to 'Nouveau employé', new_employe_path %>
