@@ -9,9 +9,8 @@ class Equipe < ApplicationRecord
   has_many:travaillerSurs
   has_many:contratClients, through: :travaillerSurs
 
-  #Verifie l'existance et la validité du chef d'équipe
-  validates :employe, presence: true
-  validates_associated :employe
 
+
+  validates :nomEquipe, presence: true
 
 end

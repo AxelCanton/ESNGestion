@@ -13,8 +13,16 @@ class ClientsController < ApplicationController
   end
 
   def edit
-
+    @client=Client.find(params[:id])
+    if @client.type == 'Entreprise'
+      @entreprise=Entreprise.find(params[:id])
+      render :template => "clients/entreprises/edit_entreprise.html.erb"
+    else
+      @particulier=Particulier.find(params[:id])
+      render :template => "clients/particuliers/edit_particulier.html.erb"
+    end
   end
+
 
   def create_entreprise
     @entreprise=Client.new(param_entreprise)
@@ -47,7 +55,20 @@ class ClientsController < ApplicationController
   end
 
   def update
+    @client = Client.find(params[:id])
+    if @client.type == 'Entreprise'
+      param=param_entreprise
+      edit='entreprises/edit_entreprise'
+    else
+      param=param_particulier
+      edit='particuliers/edit_particulier'
+    end
 
+    if @client.update(param)
+      redirect_to client_path
+    else
+      render edit
+    end
   end
 
   def destroy

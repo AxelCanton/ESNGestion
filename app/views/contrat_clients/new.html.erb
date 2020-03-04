@@ -1,1 +1,23 @@
+<%= form_with scope: :contratClient, url: contrat_clients_path, local: true do |f| %>
+  <%= label_tag :client, "Client concerné : " %>
+  <select id=client name=contratClient[client]>
+    <% @listeClient.each do |c| %>
+      <option value="<%= c.id %>"> <%= c.nomEntreprise %></options>
+    <% end %>
 
+  </select>
+
+  <%= label_tag :nomLogiciel, "Nom du logiciel" %>
+  <%= f.text_field :nomLogiciel %>
+
+  <%= label_tag :typeService, "Type de service" %>
+  <select id=typeService name=contratClient[typeService]>
+    <% @listeService.each do |s| %>
+      <option value="<%= s.id %>"> <%= s.libelleType %></options>
+    <% end %>
+  </select>
+
+  <%= label_tag :prixContrat, "Prix (euros)" %>
+  <%= f.text_field :prixContrat %>
+   <%= f.submit %>
+<% end %>

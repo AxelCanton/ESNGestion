@@ -18,6 +18,7 @@
   <% end %>
 <% end %>
 <%= form_with scope: :entreprise, url: 'entreprises', local: true do |f| %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
    <%= label_tag :entreprise_nomEntreprise, "Nom" %>
    <%= f.text_field :nomEntreprise %>
 
@@ -31,7 +32,7 @@
    <%= f.email_field :mailC %>
 
    <%= label_tag :entreprise_numTelC, "Numéro de téléphone" %>
-   <%= f.text_field :numTelC %>
+   <%= f.phone_field :numTelC %>
 
    <%= label_tag :entreprise_nomReferent, "Nom référent" %>
    <%= f.text_field :nomReferent %>
@@ -56,6 +57,7 @@
   <% end %>
 <% end %>
 <%= form_with scope: :particulier, url: 'particuliers', local: true do |f| %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
    <%= label_tag :particulier_nomP, "Nom" %>
    <%= f.text_field :nomP %>
 
@@ -73,3 +75,4 @@
 
    <%= f.submit %>
 <% end %>
+<%= link_to "Retour", clients_path %>

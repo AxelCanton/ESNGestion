@@ -1,0 +1,22 @@
+<h1>Liste des services proposés</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Nom du service</th>
+  </tr>
+</thead>
+<tbody>
+  <% @services.each do |serv| %>
+    <tr>
+      <td><%= serv.libelleType %></td>
+      <td><%= link_to 'Informations', type_service_path(serv) %></td>
+      <td><%= link_to 'Supprimer', type_service_path(serv),
+              method: :delete,
+              data: { confirm: 'Êtes-vous sûr ?' } %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+<%= link_to 'Nouveau type de service', new_type_service_path %>
+<%= link_to "Retour", root_path %>

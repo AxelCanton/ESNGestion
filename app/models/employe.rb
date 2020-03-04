@@ -1,4 +1,6 @@
 class Employe < ApplicationRecord
+
+
   #Dirige 0 ou plusieurs équipe
   has_many:equipes
 

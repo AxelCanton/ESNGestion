@@ -1,0 +1,5 @@
+<h1>Informations sur le contrat concernant le logiciel <%= @contrat.nomLogiciel %> du client <%= link_to @name, client_path(@client) %> </h1>
+<p>Nom du logiciel : <%= @contrat.nomLogiciel %> </p>
+<p>Prix : <%= @contrat.prixContrat %> </p>
+
+<%= link_to "Retour", contrat_clients_path %>

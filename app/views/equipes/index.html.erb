@@ -1,0 +1,19 @@
+<h1>Liste des équipes</h1>
+
+  <table>
+    <tr>
+      <th>Nom équipe<th>
+      <th>Chef d'équipe</th>
+    </tr>
+    <% @equipes.each do |eq| %>
+      <tr>
+        <td><%= eq.nomEquipe %>
+          <% if eq.employe.present? %>
+            <td><%= eq.employe.nomE %> <%= eq.employe.prenomE %></td>
+          <% end %>
+      <tr>
+    <% end %>
+  </table>
+
+<%= link_to "Nouvelle équipe", new_equipe_path %>
+<%= link_to "Retour", root_path %>

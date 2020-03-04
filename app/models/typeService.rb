@@ -1,6 +1,6 @@
 class TypeService < ApplicationRecord
   #Les services sont proposées pour plusieurs contrats
-  has_and_belongs_to_many:contratClients
+  has_many :contrat_clients
 
   #Validité des attributs
   validates :libelleType, presence: true

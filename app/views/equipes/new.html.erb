@@ -1,0 +1,22 @@
+<h1>Nouvelle équipe</h1>
+
+<% if @equipe.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@equipe.errors.count, "error") %> prohibited
+      this equipe from being saved:
+    </h2>
+    <ul>
+      <% @equipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with scope: :equipe, url: equipes_path, local: true do |f| %>
+  <%= label_tag :equipe_nomEquipe, "Nom de l'équipe" %>
+  <%= f.text_field :nomEquipe %>
+
+  <%= f.submit %>
+
+<% end %>

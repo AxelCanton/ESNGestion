@@ -1,0 +1,8 @@
+<h1>Modifier les informations de l'équipe <%= @equipe.nomEquipe %></h1>
+<%= form_with model: @equipe, local: true do |f| %>
+  <%= label_tag :equipe_nomEquipe,"Nom de l'équipe" %>
+  <%= f.text_field :nomEquipe %>
+  <%= f.submit %>
+<% end %>
+
+<h2>Ajouter un employé à l'équipe</h2>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_29_164509) do
+ActiveRecord::Schema.define(version: 2020_03_02_171726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,10 +27,13 @@ ActiveRecord::Schema.define(version: 2020_02_29_164509) do
     t.string "nomReferent"
   end
 
-  create_table "contratClients", force: :cascade do |t|
+  create_table "contrat_clients", force: :cascade do |t|
     t.string "nomLogiciel"
     t.bigint "client_id"
-    t.index ["client_id"], name: "index_contratClients_on_client_id"
+    t.decimal "prixContrat"
+    t.bigint "type_service_id"
+    t.index ["client_id"], name: "index_contrat_clients_on_client_id"
+    t.index ["type_service_id"], name: "index_contrat_clients_on_type_service_id"
   end
 
   create_table "employes", force: :cascade do |t|
@@ -60,6 +63,7 @@ ActiveRecord::Schema.define(version: 2020_02_29_164509) do
 
   create_table "equipes", force: :cascade do |t|
     t.bigint "employe_id"
+    t.string "nomEquipe"
     t.index ["employe_id"], name: "index_equipes_on_employe_id"
   end
 
@@ -73,30 +77,23 @@ ActiveRecord::Schema.define(version: 2020_02_29_164509) do
     t.boolean "participationEmployeTerminee"
     t.string "role"
     t.bigint "employe_id"
-    t.bigint "contratClient_id"
+    t.bigint "contrat_client_id"
     t.bigint "missions_id"
-    t.index ["contratClient_id"], name: "index_participes_on_contratClient_id"
+    t.index ["contrat_client_id"], name: "index_participes_on_contrat_client_id"
     t.index ["employe_id"], name: "index_participes_on_employe_id"
     t.index ["missions_id"], name: "index_participes_on_missions_id"
   end
 
   create_table "travaillerSurs", force: :cascade do |t|
     t.bigint "equipe_id"
-    t.bigint "contratClient_id"
+    t.bigint "contrat_client_id"
     t.boolean "participationTerminee"
-    t.index ["contratClient_id"], name: "index_travaillerSurs_on_contratClient_id"
+    t.index ["contrat_client_id"], name: "index_travaillerSurs_on_contrat_client_id"
     t.index ["equipe_id"], name: "index_travaillerSurs_on_equipe_id"
   end
 
-  create_table "typesServices", force: :cascade do |t|
+  create_table "type_services", force: :cascade do |t|
     t.string "libelleType"
-  end
-
-  create_table "typesServices_contratClients", id: false, force: :cascade do |t|
-    t.bigint "typeService_id"
-    t.bigint "contratClient_id"
-    t.index ["contratClient_id"], name: "index_typesServices_contratClients_on_contratClient_id"
-    t.index ["typeService_id"], name: "index_typesServices_contratClients_on_typeService_id"
   end
 
 end

@@ -35,8 +35,7 @@ class EmployesController < ApplicationController
   end
 
     def update
-      aa
-      @employe = Article.find(params[:id])
+      @employe = Employe.find(params[:id])
 
         if @employe.update(param_employe)
           redirect_to @employe
@@ -57,6 +56,6 @@ class EmployesController < ApplicationController
   private
   #Vérifie les données envoyées par le formulaire
     def param_employe
-      params.require(:employe).permit(:nomE, :prenomE, :ageE, :mailE, :numTelE, :formation, :adresseE, :nbAnneeExp, :intituleContrat, :salaireBrut, :dateDebutE)
+      params.require(:employe).permit(:nomE, :prenomE, :ageE, :mailE, :numTelE, :formation, :adresseE, :nbAnneeExp, :intituleContrat, :salaireBrut, :dateDebutE, :dateFinE)
     end
 end

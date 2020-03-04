@@ -1,0 +1,48 @@
+
+<h1>Liste des contrats</h1>
+
+<table>
+  <tr>
+    <th>Logiciel</th>
+    <th>Client</th>
+  </tr>
+  <tr>
+      <th>Particuliers</th>
+  </tr>
+  <% if @contratParticulier.empty? %>
+    <tr><td>Pas de contrat avec un particulier.</td><tr>
+  <% else %>
+    <% @contratParticulier.each do |c| %>
+      <tr>
+        <td><%= c.nomLogiciel %></td>
+        <td><%= c.client.nomP %></td>
+        <td><%= c.client.prenomP %></td>
+        <td><%= link_to 'Informations', contrat_client_path(c) %></td>
+        <td><%= link_to 'Supprimer', contrat_client_path(c),
+                method: :delete,
+                data: { confirm: 'Êtes-vous sûr ?' } %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <th>Entreprises</th>
+  </tr>
+  <% if @contratEntreprise.empty? %>
+    <tr><td>Pas de contrat avec une entreprise.</td></tr>
+    <% else %>
+      <% @contratEntreprise.each do |c| %>
+        <tr>
+          <td><%= c.nomLogiciel %></td>
+          <td><%= c.client.nomEntreprise %></td>
+          <td><%= link_to 'Informations', contrat_client_path(c) %></td>
+          <td><%= link_to 'Supprimer', contrat_client_path(c),
+                  method: :delete,
+                  data: { confirm: 'Êtes-vous sûr ?' } %></td>
+        </tr>
+      <% end %>
+  <% end %>
+</table>
+
+
+<%= link_to "Nouveau contrat", new_contrat_client_path %>
+<%= link_to "Retour", root_path %>
