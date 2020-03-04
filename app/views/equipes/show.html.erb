@@ -1,15 +1,19 @@
 <h1>Informations de l'équipe <%= @equipe.nomEquipe %></h1>
+<%= link_to "Retour", equipes_path %>
+<%= link_to "Modifier les informations", edit_equipe_path %>
 <p>
   <% if @equipe.employe.nil? %>
     Aucun chef d'équipe
   <% else %>
-    <%= @equipe.employe.nomE %>
+  <h2>Chef d'équipe</h2>
+    <%= @equipe.employe.nome %> <%= @equipe.employe.prenome %>
   <% end %>
 </p>
 
 <% if @employes.empty? %>
   <p>Aucun employé dans cette équipe</p>
 <% else %>
+<h2>Membres de l'équipes</h2>
 <table>
   <tr>
     <th>Nom</th>
@@ -17,14 +21,9 @@
   </tr>
   <% @employes.each do |emp| %>
     <tr>
-      <td><%= emp.nomE %></td>
-      <td><%= emp.prenomE %></td>
+      <td><%= emp.nome %></td>
+      <td><%= emp.prenome %></td>
       <td><%= link_to "Informations", employe_path(emp) %></td>
     </tr>
   <% end %>
 <% end %>
-
-
-
-  <%= link_to "Retour", equipes_path %>
-  <%= link_to "Modifier les informations", edit_equipe_path %>

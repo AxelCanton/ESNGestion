@@ -11,8 +11,8 @@
 <tbody>
   <% @employes.each do |emp| %>
     <tr>
-      <td><%= emp.nomE %></td>
-      <td><%= emp.prenomE %></td>
+      <td><%= emp.nome %></td>
+      <td><%= emp.prenome %></td>
       <td><%= emp.intituleContrat %></td>
       <td><%= link_to 'Informations', employe_path(emp) %></td>
       <td><%= link_to 'Supprimer', employe_path(emp),

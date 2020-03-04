@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_171726) do
+ActiveRecord::Schema.define(version: 2020_03_04_202143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 2020_03_02_171726) do
   end
 
   create_table "employes", force: :cascade do |t|
-    t.string "nomE"
-    t.string "prenomE"
+    t.string "nome"
+    t.string "prenome"
     t.string "mailE"
     t.decimal "ageE"
     t.string "adresseE"
@@ -52,13 +52,8 @@ ActiveRecord::Schema.define(version: 2020_03_02_171726) do
     t.string "mdp"
     t.boolean "estAdmin"
     t.boolean "estValide"
-  end
-
-  create_table "employes_equipes", id: false, force: :cascade do |t|
     t.bigint "equipe_id"
-    t.bigint "employe_id"
-    t.index ["employe_id"], name: "index_employes_equipes_on_employe_id"
-    t.index ["equipe_id"], name: "index_employes_equipes_on_equipe_id"
+    t.index ["equipe_id"], name: "index_employes_on_equipe_id"
   end
 
   create_table "equipes", force: :cascade do |t|
@@ -84,12 +79,12 @@ ActiveRecord::Schema.define(version: 2020_03_02_171726) do
     t.index ["missions_id"], name: "index_participes_on_missions_id"
   end
 
-  create_table "travaillerSurs", force: :cascade do |t|
+  create_table "travailler_surs", force: :cascade do |t|
     t.bigint "equipe_id"
     t.bigint "contrat_client_id"
     t.boolean "participationTerminee"
-    t.index ["contrat_client_id"], name: "index_travaillerSurs_on_contrat_client_id"
-    t.index ["equipe_id"], name: "index_travaillerSurs_on_equipe_id"
+    t.index ["contrat_client_id"], name: "index_travailler_surs_on_contrat_client_id"
+    t.index ["equipe_id"], name: "index_travailler_surs_on_equipe_id"
   end
 
   create_table "type_services", force: :cascade do |t|

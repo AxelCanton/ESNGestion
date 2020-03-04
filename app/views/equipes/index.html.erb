@@ -8,9 +8,15 @@
     <% @equipes.each do |eq| %>
       <tr>
         <td><%= eq.nomEquipe %>
+          <td>
           <% if eq.employe.present? %>
-            <td><%= eq.employe.nomE %> <%= eq.employe.prenomE %></td>
+            <%= eq.employe.nome %> <%= eq.employe.prenome %>
           <% end %>
+          </td>
+          <td><%= link_to "Informations", equipe_path(eq) %></td>
+          <td><%= link_to 'Supprimer', equipe_path(eq),
+                  method: :delete,
+                  data: { confirm: 'Êtes-vous sûr ?' } %></td>
       <tr>
     <% end %>
   </table>

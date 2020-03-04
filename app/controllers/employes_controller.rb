@@ -56,6 +56,6 @@ class EmployesController < ApplicationController
   private
   #Vérifie les données envoyées par le formulaire
     def param_employe
-      params.require(:employe).permit(:nomE, :prenomE, :ageE, :mailE, :numTelE, :formation, :adresseE, :nbAnneeExp, :intituleContrat, :salaireBrut, :dateDebutE, :dateFinE)
+      params.require(:employe).permit(:nome, :prenome, :ageE, :mailE, :numTelE, :formation, :adresseE, :nbAnneeExp, :intituleContrat, :salaireBrut, :dateDebutE, :dateFinE)
     end
 end

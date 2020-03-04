@@ -1,9 +1,9 @@
 class Equipe < ApplicationRecord
   #FK du chef d'équipe
-  belongs_to:employe
+  belongs_to:employe, optional: true
 
   #Contient aucun ou plusieurs employés
-  has_and_belongs_to_many :employes
+  has_many :employes
 
   #Travail sur aucun ou plusieurs projets
   has_many:travaillerSurs

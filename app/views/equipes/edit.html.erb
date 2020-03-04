@@ -5,4 +5,48 @@
   <%= f.submit %>
 <% end %>
 
+
+<% if @chef.nil? %>
+  <h2>Désigner le chef d'équipe</h2>
+  <%= form_with model: @equipe, local: true, url: 'addChef' do |f| %>
+    <select id=chef name=equipe[employe_id]>
+      <% @employesDispo.each do |s| %>
+        <option value="<%= s.id %>"><%=s.nome %> <%= s.prenome %></options>
+      <% end %>
+    </select>
+    <%= f.submit %>
+  <% end %>
+<% else %>
+  <h4>Chef d'équipe : <%= @chef.nome %> <%= @chef.prenome %></h4>
+  Nouveau chef d'équipe :
+<% end %>
+
+
 <h2>Ajouter un employé à l'équipe</h2>
+<% if @employesDispo.empty? %>
+  <p>Aucun employé de disponible.</p>
+<% else %>
+  <% @employesDispo.each do |emp| %>
+    <%= form_with model: @equipe, local: true, url: 'addEmploye' do |f| %>
+      <%= f.hidden_field(:emp_id, :value => emp.id) %>
+        <p><%= emp.nome %> <%= emp.prenome %></p>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2>Supprimer un employé de l'équipe</h2>
+<% if @employesEquipe.empty? %>
+  <p>L'équipe est vide</p>
+<% else %>
+  <% @employesEquipe.each do |emp| %>
+  <%= form_with model: @equipe, local: true, url: 'delEmploye' do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= f.hidden_field(:emp_id, :value => emp.id) %>
+      <p><%= emp.nome %> <%= emp.prenome %></p>
+    <%= f.submit %>
+  <% end %>
+  <% end %>
+<% end %>
+
+<%= link_to "Retour", equipes_path %>

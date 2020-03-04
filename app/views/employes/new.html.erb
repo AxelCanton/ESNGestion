@@ -14,11 +14,11 @@
   </div>
 <% end %>
 <%= form_with scope: :employe, url: employes_path, local: true do |f| %>
-   <%= label_tag :employe_nomE, "Nom" %>
-   <%= f.text_field :nomE %>
+   <%= label_tag :employe_nome, "Nom" %>
+   <%= f.text_field :nome %>
 
-   <%= label_tag :employe_prenomE, "Prénom" %>
-   <%= f.text_field :prenomE %>
+   <%= label_tag :employe_prenome, "Prénom" %>
+   <%= f.text_field :prenome %>
 
    <%= label_tag :employe_ageE, "Age" %>
    <%= f.text_field :ageE %>
