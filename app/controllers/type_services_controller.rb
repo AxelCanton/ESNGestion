@@ -1,4 +1,5 @@
 class TypeServicesController < ApplicationController
+  before_action :verif_admin
   def new
     @service=TypeService.new
   end

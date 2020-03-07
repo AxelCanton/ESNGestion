@@ -1,0 +1,12 @@
+<h1>ESN Gestion</h1>
+
+<h2>Page de connection</h2>
+
+<%= form_with scope: :employe, url: "/sign_in", local: true do |f| %>
+<%= label_tag :email, "Adresse mail" %>
+<%= f.text_field :email %>
+
+<%= label_tag :password, "Mot de passe" %>
+<%= f.password_field :password %>
+<%= f.submit %>
+<% end %>

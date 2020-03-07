@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_06_181215) do
+ActiveRecord::Schema.define(version: 2020_03_07_233510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2020_03_06_181215) do
   create_table "employes", force: :cascade do |t|
     t.string "nome"
     t.string "prenome"
-    t.string "mailE"
     t.decimal "ageE"
     t.string "adresseE"
     t.string "numTelE"
@@ -50,10 +49,12 @@ ActiveRecord::Schema.define(version: 2020_03_06_181215) do
     t.decimal "nbAnneeExp"
     t.string "intituleContrat"
     t.decimal "salaireBrut"
-    t.string "mdp"
     t.boolean "estAdmin"
     t.boolean "estValide"
     t.bigint "equipe_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.index ["email"], name: "index_employes_on_email", unique: true
     t.index ["equipe_id"], name: "index_employes_on_equipe_id"
   end
 

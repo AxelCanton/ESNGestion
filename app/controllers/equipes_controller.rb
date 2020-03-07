@@ -1,4 +1,5 @@
 class EquipesController < ApplicationController
+  before_action :verif_admin  
   def index
     @equipes=Equipe.all
   end

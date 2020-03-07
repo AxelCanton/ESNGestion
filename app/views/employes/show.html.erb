@@ -1,7 +1,10 @@
+<% if @current_user.estAdmin == true %>
+  <%= link_to "Retour", employes_path %>
+<% end %>
 <header><h1><%= @employe.nome %> <%=@employe.prenome %></h1></header>
 <main>
   <p>Age : <%= @employe.ageE.to_i %></p>
-  <p>Adresse email : <%= @employe.mailE %></p>
+  <p>Adresse email : <%= @employe.email %></p>
   <p>Numéro de téléphone : <%= @employe.numTelE %></p>
   <p>Adresse : <%= @employe.adresseE %></p>
 
@@ -19,9 +22,10 @@
 <%= @employe.salaireBrut.to_i %>
 </p>
 
-  <%= link_to "Retour", employes_path %>
+<% if @current_user.estAdmin == true %>
   <%= link_to "Modifier les informations", edit_employe_path %>
-  <% if @contratActuel.empty? %>
+<% end %>
+  <% if @contratActuel.empty? && @current_user.estAdmin == true %>
     <%= link_to "Mettre l'employé sur un contrat", @employe.id.to_s+"/ajout_contrat" %>
     <%= link_to "Envoyer l'employé en mission",  @employe.id.to_s+"/ajout_mission" %>
   <% else %>

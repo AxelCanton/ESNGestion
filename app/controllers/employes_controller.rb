@@ -1,7 +1,8 @@
 class EmployesController < ApplicationController
-
+  before_action :verif_admin, :except => [:show]
+  before_action :verif_employe, :only => [:show]
   def index
-    @employes=Employe.all
+    @employes=Employe.where("\"estAdmin\"=false")
   end
 
   def show
@@ -31,13 +32,13 @@ class EmployesController < ApplicationController
 
     mdp=[*('A'..'Z'),*('0'..'9')]
     mdp=mdp.shuffle[0,9].join
-    @employe.mdp=mdp
+    @employe.encrypted_password=secure_hash(mdp)
     @employe.estAdmin=false
     @employe.estValide=false
 
     if @employe.save
       #Envoi d'un mail contenant le mdp au mail du nouvel employé
-      EmployeMailer.with(employe: @employe).nv_employe.deliver_later
+      EmployeMailer.with(email: @employe.email,mdp: mdp).nv_employe.deliver_now
       redirect_to @employe
     else
       render 'new'
@@ -134,7 +135,7 @@ end
   private
   #Vérifie les données envoyées par le formulaire
     def param_employe
-      params.require(:employe).permit(:nome, :prenome, :ageE, :mailE, :numTelE, :formation, :adresseE, :nbAnneeExp, :intituleContrat, :salaireBrut, :dateDebutE, :dateFinE)
+      params.require(:employe).permit(:nome, :prenome, :ageE, :email, :numTelE, :formation, :adresseE, :nbAnneeExp, :intituleContrat, :salaireBrut, :dateDebutE, :dateFinE)
     end
     def param_add_contrat
       params.require(:participe).permit(:role,:contrat_client_id, :dateDebut)
@@ -145,4 +146,18 @@ end
     def param_termine
       params.require(:participe2).permit(:dateFin)
     end
+
+    #fct qui crypte le mdp
+    def secure_hash(string)
+      Digest::SHA2.hexdigest(string)
+    end
+
+    #pour éviter qu'un employé puisse accéder à la page perso d'un autre employé
+    def verif_employe
+      id=Employe.find(params[:id]).id
+      if @current_user.estAdmin!=true && @current_user.try(:id)!=id
+        return head :forbidden
+      end
+    end
+
 end

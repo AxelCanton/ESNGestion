@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  #devise_for :employes
   patch 'equipes/:id/addEmploye', to: 'equipes#add_employe'
   patch 'equipes/:id/delEmploye', to: 'equipes#destroy_employe'
   patch 'equipes/:id/addChef', to: 'equipes#add_chef'
@@ -21,7 +22,11 @@ Rails.application.routes.draw do
 
   post 'clients/particuliers', to: 'clients#create_particulier'
   post 'clients/entreprises', to: 'clients#create_entreprise'
-  root 'accueil#index'
+
+
+  get 'accueil', to: 'accueils#index'
+  post '/sign_in', to: 'sessions#login'
+  root 'accueils#connexion'
 
   resources :employes, :equipes, :clients, :contrat_clients, :type_services
 

@@ -1,4 +1,5 @@
 class ContratClientsController < ApplicationController
+  before_action :verif_admin
 
     def index
       @contrats=ContratClient.where("termine=false")
@@ -86,4 +87,5 @@ class ContratClientsController < ApplicationController
       def param_contrat
         params.require(:contratClient).permit(:client, :prixContrat, :nomLogiciel, :typeService)
       end
+
 end

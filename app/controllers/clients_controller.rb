@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  before_action :verif_admin
+
   def index
 
   end
