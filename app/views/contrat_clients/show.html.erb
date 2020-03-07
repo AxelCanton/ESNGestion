@@ -1,5 +1,28 @@
+<%= link_to "Retour", contrat_clients_path %>
+
 <h1>Informations sur le contrat concernant le logiciel <%= @contrat.nomLogiciel %> du client <%= link_to @name, client_path(@client) %> </h1>
 <p>Nom du logiciel : <%= @contrat.nomLogiciel %> </p>
 <p>Prix : <%= @contrat.prixContrat %> </p>
 
-<%= link_to "Retour", contrat_clients_path %>
+
+<% if @equipes.empty? %>
+  <h2>Aucune équipe sur ce contrat</h2>
+<% else %>
+  <h2>Liste des equipes sur ce contrat</h2>
+
+  <table>
+    <tr>
+      <th>Nom de l'équipe</th>
+    </tr>
+  <% @equipes.each do |eq| %>
+    <tr>
+      <td><%= eq.nomEquipe %></td>
+      <td><%= link_to "Informations", equipe_path(eq) %></td>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+<h2>Liste des employés sur le contrat</h2>
+
+<%= link_to("Contrat terminé", @contrat.id.to_s+"/termine", method: :patch, data: {confirm: "Êtes-vous sûr ?"}) %>

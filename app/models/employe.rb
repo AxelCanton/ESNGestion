@@ -8,8 +8,8 @@ class Employe < ApplicationRecord
   belongs_to:equipe, optional: true
 
   #Travaille sur aucun ou plusieurs contrats
-  has_many:participes
-  has_many:contratClients, through: :participes
+  has_many:participe2s
+  has_many:contrat_clients, through: :participe2s
 
   #Vérifie la validité des attributs
   validates :nome, :prenome, :mailE, :adresseE, :numTelE, :formation, :nbAnneeExp, :intituleContrat, :salaireBrut, :mdp, :ageE, :dateDebutE, presence: true

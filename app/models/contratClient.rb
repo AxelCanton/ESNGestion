@@ -1,11 +1,11 @@
 class ContratClient < ApplicationRecord
   #Concerne aucune ou plusieurs équipes
-  has_many :travaillerSurs
-  has_many :equipes, through: :travaillerSurs
+  has_many :travailler_surs
+  has_many :equipes, through: :travailler_surs
 
   #Concerne aucuns ou plusieurs employés
-  has_many :participes
-  has_many :employes, through: :participes
+  has_many :participe2s
+  has_many :employes, through: :participe2s
 
   #Un contrat est signé par un client
   belongs_to :client

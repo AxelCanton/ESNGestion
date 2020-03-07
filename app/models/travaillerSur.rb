@@ -1,11 +1,9 @@
 class TravaillerSur < ApplicationRecord
   #FK
   belongs_to :equipe
-  belongs_to :contratClient
+  belongs_to :contrat_client
 
-  #Vérifie la validité des attributs
-  validates :participationTerminee, presence: true
 
   #Vérifie la validité des objets associés
-  validates_associated :equipe, :contratClient
+  validates_associated :equipe, :contrat_client
 end

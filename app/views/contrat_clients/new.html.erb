@@ -2,7 +2,13 @@
   <%= label_tag :client, "Client concerné : " %>
   <select id=client name=contratClient[client]>
     <% @listeClient.each do |c| %>
-      <option value="<%= c.id %>"> <%= c.nomEntreprise %></options>
+      <option value="<%= c.id %>">
+        <% if c.type=="Entreprise" %>
+          <%= c.nomEntreprise %>
+        <% else %>
+          <%= c.nomP %> <%= c.prenomP %>
+        <% end %>
+      </options>
     <% end %>
 
   </select>

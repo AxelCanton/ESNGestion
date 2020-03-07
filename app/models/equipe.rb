@@ -6,8 +6,8 @@ class Equipe < ApplicationRecord
   has_many :employes
 
   #Travail sur aucun ou plusieurs projets
-  has_many:travaillerSurs
-  has_many:contratClients, through: :travaillerSurs
+  has_many:travailler_surs
+  has_many:contrat_clients, through: :travailler_surs
 
 
 

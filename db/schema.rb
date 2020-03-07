@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_202143) do
+ActiveRecord::Schema.define(version: 2020_03_06_181215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_202143) do
     t.bigint "client_id"
     t.decimal "prixContrat"
     t.bigint "type_service_id"
+    t.boolean "termine"
     t.index ["client_id"], name: "index_contrat_clients_on_client_id"
     t.index ["type_service_id"], name: "index_contrat_clients_on_type_service_id"
   end
@@ -66,17 +67,17 @@ ActiveRecord::Schema.define(version: 2020_03_04_202143) do
     t.string "adresseM"
   end
 
-  create_table "participes", force: :cascade do |t|
+  create_table "participe2s", force: :cascade do |t|
     t.datetime "dateDebut"
     t.datetime "dateFin"
     t.boolean "participationEmployeTerminee"
     t.string "role"
     t.bigint "employe_id"
     t.bigint "contrat_client_id"
-    t.bigint "missions_id"
-    t.index ["contrat_client_id"], name: "index_participes_on_contrat_client_id"
-    t.index ["employe_id"], name: "index_participes_on_employe_id"
-    t.index ["missions_id"], name: "index_participes_on_missions_id"
+    t.bigint "mission_id"
+    t.index ["contrat_client_id"], name: "index_participe2s_on_contrat_client_id"
+    t.index ["employe_id"], name: "index_participe2s_on_employe_id"
+    t.index ["mission_id"], name: "index_participe2s_on_mission_id"
   end
 
   create_table "travailler_surs", force: :cascade do |t|

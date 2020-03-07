@@ -6,7 +6,11 @@ class EquipesController < ApplicationController
   def show
     @equipe=Equipe.find(params[:id])
     @employes=@equipe.employes.order("nome")
+    @contratsActuels=TravaillerSur.find_by_sql(["SELECT \"nomLogiciel\",client_id FROM travailler_surs AS ts  INNER JOIN contrat_clients AS cs ON ts.contrat_client_id = cs.id WHERE \"participationTerminee\" = false AND equipe_id = ?", @equipe.id])
+    @contratsAnciens=TravaillerSur.find_by_sql(["SELECT \"nomLogiciel\",client_id FROM travailler_surs AS ts INNER JOIN contrat_clients AS cs ON ts.contrat_client_id = cs.id WHERE \"participationTerminee\" = true AND equipe_id = ?", @equipe.id])
+
   end
+
   def new
     @equipe=Equipe.new
   end
@@ -14,9 +18,22 @@ class EquipesController < ApplicationController
   def edit
     @chef=Equipe.find(params[:id]).employe
     @equipe=Equipe.find(params[:id])
-    @employesDispo=Employe.where("equipe_id IS NULL").order("nome")
-    @employesEquipe=Employe.find_by_sql("SELECT employes.id,equipes.employe_id,nome,prenome FROM employes INNER JOIN equipes ON employes.equipe_id=equipes.id AND equipes.id = ? ",@equipe.id)
 
+    #Liste des employés n'appartenant pas à une équipe
+    @chefsDispo=Employe.where("equipe_id IS NULL").order("nome")
+
+
+    #Liste des employés dispo n'apartenant pas à une autre équipe et n'étant pas chef d'une ou plusieurs équipes
+    @employesDispo=Employe.where("(equipe_id IS NULL) AND employes.id NOT IN (SELECT equipes.employe_id FROM equipes WHERE employe_id IS NOT NULL)")
+
+    #Liste des employés de l'équipe
+    @employesEquipe=Employe.joins(:equipe).where("employes.equipe_id=?",@equipe.id).select("employes.id","nome","prenome").order("nome")
+
+    #Liste des contrats auquels l'équipe particpe et l'id de la relation (pour pouvoir supprimer)
+    @contrats=ContratClient.joins(:travailler_surs).where("travailler_surs.equipe_id = ? AND \"participationTerminee\"=false",@equipe.id).select("contrat_clients.*,travailler_surs.id as id_ts, equipe_id")
+
+    #Liste des contrats auquels l'équipe ne participe pas
+    @contratsDispo=ContratClient.where("termine=false AND id NOT IN (SELECT contrat_client_id FROM travailler_surs WHERE equipe_id = ?)", @equipe.id)
   end
 
   def create
@@ -61,13 +78,35 @@ class EquipesController < ApplicationController
 
   end
 
+  #Ajoute un contrat à l'équipe
+  def add_contrat
+    @idContrat=ajout_contrat['contrat']
+    @idEquipe=params[:id]
+    @equipe=Equipe.find(@idEquipe)
+    @contrat=ContratClient.find(@idContrat)
+
+    @relation=TravaillerSur.new(contrat_client_id: @idContrat, equipe_id: @idEquipe, participationTerminee: false)
+    @relation.save
+    redirect_to @equipe
+  end
+
+
+
   #Supprime un employé de l'équipe
   def destroy_employe
     @employe=Employe.find(id_employe['emp_id'])
     @equipe=Equipe.find(params[:id])
     @equipe.employes.delete(@employe)
     redirect_to edit_equipe_path(@equipe)
+  end
 
+  #Met l'attribut participationTerminee de la relation à true
+  def destroy_contrat
+    param=supp_contrat
+    @relation=TravaillerSur.find(param['id_ts'])
+    @relation.participationTerminee=true
+    @relation.save
+    redirect_to Equipe.find(param['id_eq'])
   end
 
   private
@@ -80,4 +119,10 @@ class EquipesController < ApplicationController
     def update_chef
         params.require(:equipe).permit(:employe_id)
     end
+    def ajout_contrat
+      params.require(:travailler_surs).permit(:contrat)
+    end
+    def supp_contrat
+      params.require(:ts).permit(:id_ts, :id_eq)
+      end
 end

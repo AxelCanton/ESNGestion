@@ -1,7 +1,7 @@
 class ContratClientsController < ApplicationController
 
     def index
-      @contrats=ContratClient.all
+      @contrats=ContratClient.where("termine=false")
       @contratParticulier=Array.new
       @contratEntreprise=Array.new
       @contrats.each do |c|
@@ -11,11 +11,14 @@ class ContratClientsController < ApplicationController
           @contratParticulier.push(c)
         end
       end
+
+      @contratsTermines=ContratClient.where("termine=true")
     end
 
     def show
       @contrat=ContratClient.find(params[:id])
       @client=@contrat.client
+      @equipes=Equipe.find_by_sql(["SELECT eq.id,eq.\"nomEquipe\" FROM equipes as eq INNER JOIN travailler_surs as ts ON ts.equipe_id = eq.id WHERE ts.contrat_client_id = ? AND ts.\"participationTerminee\"=false", @contrat.id])
       if @client.type=='Entreprise'
         @name=@client.nomEntreprise
       else
@@ -39,6 +42,7 @@ class ContratClientsController < ApplicationController
       @service=TypeService.find(@param['typeService'])
       @contrat=ContratClient.new(nomLogiciel: @param['nomLogiciel'], prixContrat: @param['prixContrat'])
       @contrat.client=@client
+      @contrat.termine=false
 
        @contrat.type_service=@service
        if @contrat.save
@@ -62,9 +66,19 @@ class ContratClientsController < ApplicationController
         @contrat = ContratClient.find(params[:id])
         @contrat.destroy
 
-        redirect_to contrats_path
+        redirect_to contrat_clients_path
       end
 
+      def contrat_termine
+        @contrat=ContratClient.find(params[:id])
+        @employes=Participe2.where("contrat_client_id = ? AND \"participationEmployeTerminee\" = false", @contrat.id)
+        @employes.each do |emp|
+          emp.participationEmployeTerminee=true
+        end
+        @contrat.termine=true
+        @contrat.save
+        redirect_to contrat_clients_path
+      end
 
 
     private

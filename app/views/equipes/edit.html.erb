@@ -1,24 +1,43 @@
 <h1>Modifier les informations de l'équipe <%= @equipe.nomEquipe %></h1>
 <%= form_with model: @equipe, local: true do |f| %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <%= label_tag :equipe_nomEquipe,"Nom de l'équipe" %>
   <%= f.text_field :nomEquipe %>
-  <%= f.submit %>
+  <%= f.submit 'Enregistrer' %>
 <% end %>
 
-
+<h2>Chef d'équipe</h2>
 <% if @chef.nil? %>
-  <h2>Désigner le chef d'équipe</h2>
-  <%= form_with model: @equipe, local: true, url: 'addChef' do |f| %>
-    <select id=chef name=equipe[employe_id]>
-      <% @employesDispo.each do |s| %>
-        <option value="<%= s.id %>"><%=s.nome %> <%= s.prenome %></options>
+  <% if @chefsDispo.empty? %>
+    <p>Aucun employé disponible</p>
+    <% else %>
+      <p>Désigner le chef d'équipe</p>
+      <%= form_with model: @equipe, local: true, url: 'addChef' do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <select id=chef name=equipe[employe_id]>
+          <% @chefsDispo.each do |s| %>
+            <option value="<%= s.id %>"><%=s.nome %> <%= s.prenome %></options>
+          <% end %>
+        </select>
+        <%= f.submit 'Enregistrer' %>
       <% end %>
-    </select>
-    <%= f.submit %>
-  <% end %>
+    <% end %>
 <% else %>
   <h4>Chef d'équipe : <%= @chef.nome %> <%= @chef.prenome %></h4>
-  Nouveau chef d'équipe :
+  <% if @employesDispo.empty? %>
+    <p>Aucun employé de disponible pour remplacer le chef d'équipe</p>
+  <% else %>
+    Nouveau chef d'équipe :
+    <%= form_with model: @equipe, local: true, url: 'addChef' do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <select id=chef name=equipe[employe_id]>
+        <% @employesDispo.each do |s| %>
+          <option value="<%= s.id %>"><%=s.nome %> <%= s.prenome %></options>
+        <% end %>
+      </select>
+      <%= f.submit 'Enregistrer' %>
+    <% end %>
+  <% end %>
 <% end %>
 
 
@@ -28,9 +47,10 @@
 <% else %>
   <% @employesDispo.each do |emp| %>
     <%= form_with model: @equipe, local: true, url: 'addEmploye' do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <%= f.hidden_field(:emp_id, :value => emp.id) %>
         <p><%= emp.nome %> <%= emp.prenome %></p>
-      <%= f.submit %>
+      <%= f.submit 'Enregistrer' %>
     <% end %>
   <% end %>
 <% end %>
@@ -44,9 +64,53 @@
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= f.hidden_field(:emp_id, :value => emp.id) %>
       <p><%= emp.nome %> <%= emp.prenome %></p>
-    <%= f.submit %>
+    <%= f.submit 'Enregistrer' %>
   <% end %>
   <% end %>
 <% end %>
 
-<%= link_to "Retour", equipes_path %>
+<h2>Ajouter l'équipe à un contrat</h2>
+<% if @contratsDispo.empty? %>
+  <p>Pas de contrat disponible.</p>
+<% else %>
+  <% @contratsDispo.each do |cont| %>
+  <%= form_with scope: :travailler_surs, local: true, url: 'addContrat' do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= f.hidden_field(:contrat, :value => cont.id) %>
+      <p>Logiciel : <%= cont.nomLogiciel %> </p>
+      <p>Client :
+        <% if cont.client.type=='Entreprise'  %>
+          <%= cont.client.nomEntreprise %>
+        <% else %>
+          <%= cont.client.nomP %> <%= cont.client.prenomP %>
+        <% end %>
+    </p>
+    <%= f.submit 'Enregistrer' %>
+  <% end %>
+  <% end %>
+<% end %>
+
+<h2>Enlever l'équipe d'un contrat</h2>
+<% if @contrats.empty? %>
+  <p>Pas de contrat disponible.</p>
+<% else %>
+  <% @contrats.each do |cont| %>
+  <%= form_with model: cont, local: true, url: 'delContrat' do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag 'ts[id_ts]' , cont.id_ts %>
+    <%= hidden_field_tag 'ts[id_eq]' , cont.equipe_id %>
+      <p>Logiciel : <%= cont.nomLogiciel %> </p>
+      <p>Client :
+        <% if cont.client.type=='Entreprise'  %>
+          <%= cont.client.nomEntreprise %>
+        <% else %>
+          <%= cont.client.nomP %> <%= cont.client.prenomP %>
+        <% end %>
+    </p>
+    <%= f.submit 'Enregistrer' %>
+  <% end %>
+  <% end %>
+<% end %>
+
+
+<%= link_to "Retour", equipe_path %>

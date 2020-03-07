@@ -5,7 +5,7 @@
   <p>Numéro de téléphone : <%= @employe.numTelE %></p>
   <p>Adresse : <%= @employe.adresseE %></p>
 
-  <h2>Contrat</h2>
+  <h2>Contrat employé</h2>
   <p>Intitulé : <%= @employe.intituleContrat %> </p>
   <p>Date de début : <%= @employe.dateDebutE.strftime("%d/%m/%Y") %></p>
   <p>Date fin :
@@ -18,6 +18,48 @@
 <p>Salaire brut :
 <%= @employe.salaireBrut.to_i %>
 </p>
+
   <%= link_to "Retour", employes_path %>
   <%= link_to "Modifier les informations", edit_employe_path %>
+  <% if @contratActuel.empty? %>
+    <%= link_to "Mettre l'employé sur un contrat", @employe.id.to_s+"/ajout_contrat" %>
+    <%= link_to "Envoyer l'employé en mission",  @employe.id.to_s+"/ajout_mission" %>
+  <% else %>
+    <h2>Contrat client actuel</h2>
+    Logiciel : <%= @contratActuel[0].nomLogiciel %> du client
+    <% if @contratActuel[0].type=='Entreprise' %>
+      <%= @contratActuel[0].nomEntreprise %>
+    <% else %>
+      <%= @contratActuel[0].nomP %> <%= @contratActuel[0].prenomP %>
+    <% end %>
+    <% if !@mission.nil? %>
+      <p>En mission à l'adresse suivante : <%= @mission.adresseM %>
+    <% end %>
+    <h4>Finir la participation au contrat de cet employé</h4>
+    <%= form_with(model: @participe,local: true,url: @employe.id.to_s+"/termine",method: :patch) do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <%= label_tag :participe2_dateFin,"Date de fin" %>
+      <%= f.date_field :dateFin %>
+      <%= f.submit "Enregistrer" %>
+    <% end %>
+  <% end %>
+
+<h2>Liste des anciens contrats</h2>
+<% if @contratsAnciens.empty? %>
+  <p>Cet employé n'a participé à aucun contrat.</p>
+<% else %>
+  <table>
+    <tr>
+      <th>Nom Logiciel</th>
+      <th>Date de fin</th>
+    </tr>
+  <% @contratsAnciens.each do |cont| %>
+    <tr>
+      <td><%= cont.nomLogiciel %></td>
+      <td><%= cont.dateFin.to_date   %></td>
+      <td><%= link_to "Détail client", client_path(cont.client_id) %></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
 </main>
