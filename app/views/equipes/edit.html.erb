@@ -1,8 +1,11 @@
+<%= link_to "Retour", equipe_path, class: "btn btn2 btn-dark" %>
 <h1>Modifier les informations de l'équipe <%= @equipe.nomEquipe %></h1>
 <%= form_with model: @equipe, local: true do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="form-group">
   <%= label_tag :equipe_nomEquipe,"Nom de l'équipe" %>
-  <%= f.text_field :nomEquipe %>
+  <%= f.text_field :nomEquipe, class: "form-control" %>
+   </div>
   <%= f.submit 'Enregistrer' %>
 <% end %>
 
@@ -10,19 +13,24 @@
 <% if @chef.nil? %>
   <% if @chefsDispo.empty? %>
     <p>Aucun employé disponible</p>
+
     <% else %>
       <p>Désigner le chef d'équipe</p>
       <%= form_with model: @equipe, local: true, url: 'addChef' do |f| %>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-        <select id=chef name=equipe[employe_id]>
+        <div class="form-group">
+        <select id=chef name=equipe[employe_id] class=form-control>
           <% @chefsDispo.each do |s| %>
-            <option value="<%= s.id %>"><%=s.nome %> <%= s.prenome %></options>
+            <option value="<%= s.id %>"><%=s.nome.capitalize %> <%= s.prenome.capitalize %></options>
           <% end %>
         </select>
-        <%= f.submit 'Enregistrer' %>
+        </div>
+        <%= f.submit 'Ajouter' %>
       <% end %>
     <% end %>
 <% else %>
+
+  #Si on veut désigner un nv chef d'équipe
   <h4>Chef d'équipe : <%= @chef.nome %> <%= @chef.prenome %></h4>
   <% if @employesDispo.empty? %>
     <p>Aucun employé de disponible pour remplacer le chef d'équipe</p>
@@ -30,12 +38,14 @@
     Nouveau chef d'équipe :
     <%= form_with model: @equipe, local: true, url: 'addChef' do |f| %>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-      <select id=chef name=equipe[employe_id]>
+        <div class="form-group">
+      <select id=chef name=equipe[employe_id] class=form-control>
         <% @employesDispo.each do |s| %>
           <option value="<%= s.id %>"><%=s.nome %> <%= s.prenome %></options>
         <% end %>
       </select>
-      <%= f.submit 'Enregistrer' %>
+      </div>
+      <%= f.submit 'Ajouter' %>
     <% end %>
   <% end %>
 <% end %>
@@ -49,11 +59,13 @@
     <%= form_with model: @equipe, local: true, url: 'addEmploye' do |f| %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <%= f.hidden_field(:emp_id, :value => emp.id) %>
-        <p><%= emp.nome %> <%= emp.prenome %></p>
-      <%= f.submit 'Enregistrer' %>
+        <p><%= emp.nome.capitalize %> <%= emp.prenome.capitalize %></p>
+      <%= f.submit 'Ajouter' %>
     <% end %>
   <% end %>
 <% end %>
+
+
 
 <h2>Supprimer un employé de l'équipe</h2>
 <% if @employesEquipe.empty? %>
@@ -63,8 +75,8 @@
   <%= form_with model: @equipe, local: true, url: 'delEmploye' do |f| %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= f.hidden_field(:emp_id, :value => emp.id) %>
-      <p><%= emp.nome %> <%= emp.prenome %></p>
-    <%= f.submit 'Enregistrer' %>
+      <p><%= emp.nome.capitalize %> <%= emp.prenome.capitalize %></p>
+    <%= f.submit 'Supprimer' %>
   <% end %>
   <% end %>
 <% end %>
@@ -74,18 +86,22 @@
   <p>Pas de contrat disponible.</p>
 <% else %>
   <% @contratsDispo.each do |cont| %>
-  <%= form_with scope: :travailler_surs, local: true, url: 'addContrat' do |f| %>
+  <%= form_with model: cont, local: true,method: :patch, url: 'addContrat' do |f| %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= f.hidden_field(:contrat, :value => cont.id) %>
       <p>Logiciel : <%= cont.nomLogiciel %> </p>
       <p>Client :
-        <% if cont.client.type=='Entreprise'  %>
-          <%= cont.client.nomEntreprise %>
+        <%if cont.client %>
+          <% if cont.client.type=='Entreprise'  %>
+            <%= cont.client.nomEntreprise %>
+          <% else %>
+            <%= cont.client.nomP.capitalize %> <%= cont.client.prenomP.capitalize %>
+          <% end %>
         <% else %>
-          <%= cont.client.nomP %> <%= cont.client.prenomP %>
+          Client supprimé
         <% end %>
     </p>
-    <%= f.submit 'Enregistrer' %>
+    <%= f.submit 'Ajouter', data: { confirm: 'Êtes-vous sûr ?' } %>
   <% end %>
   <% end %>
 <% end %>
@@ -107,10 +123,7 @@
           <%= cont.client.nomP %> <%= cont.client.prenomP %>
         <% end %>
     </p>
-    <%= f.submit 'Enregistrer' %>
+    <%= f.submit 'Enregistrer', data: { confirm: 'Êtes-vous sûr ?' } %>
   <% end %>
   <% end %>
 <% end %>
-
-
-<%= link_to "Retour", equipe_path %>

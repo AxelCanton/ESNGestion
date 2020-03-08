@@ -1,6 +1,9 @@
+<%= link_to "Retour", contrat_clients_path, class: "btn btn btn-dark" %>
 <%= form_with scope: :contratClient, url: contrat_clients_path, local: true do |f| %>
+
+    <div class="form-group">
   <%= label_tag :client, "Client concerné : " %>
-  <select id=client name=contratClient[client]>
+  <select id=client name=contratClient[client] class="form-control">
     <% @listeClient.each do |c| %>
       <option value="<%= c.id %>">
         <% if c.type=="Entreprise" %>
@@ -10,20 +13,27 @@
         <% end %>
       </options>
     <% end %>
-
   </select>
+  </div>
 
+    <div class="form-group">
   <%= label_tag :nomLogiciel, "Nom du logiciel" %>
-  <%= f.text_field :nomLogiciel %>
+  <%= f.text_field :nomLogiciel, class: "form-control" %>
+  </div>
 
+    <div class="form-group">
   <%= label_tag :typeService, "Type de service" %>
-  <select id=typeService name=contratClient[typeService]>
+  <select id=typeService name=contratClient[typeService] class="form-control">
     <% @listeService.each do |s| %>
       <option value="<%= s.id %>"> <%= s.libelleType %></options>
     <% end %>
   </select>
+  </div>
 
+    <div class="form-group">
   <%= label_tag :prixContrat, "Prix (euros)" %>
-  <%= f.text_field :prixContrat %>
-   <%= f.submit %>
+  <%= f.text_field :prixContrat, class: "form-control" %>
+</div>
+
+   <%= f.submit "Enregistrer" %>
 <% end %>

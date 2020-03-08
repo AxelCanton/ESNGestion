@@ -1,4 +1,4 @@
-<%= link_to "Retour", accueil_path %>
+<%= link_to "Retour", accueil_path, class: "btn btn2 btn-dark" %>
 <h1>Liste des services proposés</h1>
 
 <table>
@@ -11,12 +11,12 @@
   <% @services.each do |serv| %>
     <tr>
       <td><%= serv.libelleType %></td>
-      <td><%= link_to 'Informations', type_service_path(serv) %></td>
-      <td><%= link_to 'Supprimer', type_service_path(serv),
+      <td><%= link_to 'Modifier le nom', edit_type_service_path(serv), class: "btn btn-info" %>
+        <%= link_to 'Supprimer', type_service_path(serv),
               method: :delete,
-              data: { confirm: 'Êtes-vous sûr ?' } %></td>
+              data: { confirm: 'Êtes-vous sûr ?' }, class: "btn btn-danger" %></td>
     </tr>
   <% end %>
 </tbody>
 </table>
-<%= link_to 'Nouveau type de service', new_type_service_path %>
+<%= link_to 'Nouveau type de service', new_type_service_path, class: "btn btn-secondary" %>

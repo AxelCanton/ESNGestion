@@ -5,8 +5,11 @@ class ContratClientsController < ApplicationController
       @contrats=ContratClient.where("termine=false")
       @contratParticulier=Array.new
       @contratEntreprise=Array.new
+      @clientSupprime=Array.new
       @contrats.each do |c|
-        if c.client.type == 'Entreprise'
+        if !c.client
+          @clientSupprime.push(c)
+        elsif c.client.type == 'Entreprise'
           @contratEntreprise.push(c)
         else
           @contratParticulier.push(c)
@@ -19,12 +22,21 @@ class ContratClientsController < ApplicationController
     def show
       @contrat=ContratClient.find(params[:id])
       @client=@contrat.client
-      @equipes=Equipe.find_by_sql(["SELECT eq.id,eq.\"nomEquipe\" FROM equipes as eq INNER JOIN travailler_surs as ts ON ts.equipe_id = eq.id WHERE ts.contrat_client_id = ? AND ts.\"participationTerminee\"=false", @contrat.id])
-      if @client.type=='Entreprise'
-        @name=@client.nomEntreprise
+      if @contrat.type_service
+        @service=@contrat.type_service.libelleType
       else
-        @name=@client.nomP.to_s+" "+@client.prenomP.to_s
+        @service="Pas de service associé (le service a probablement été supprimé)"
       end
+
+      @equipes=Equipe.find_by_sql(["SELECT eq.id,eq.\"nomEquipe\" FROM equipes as eq INNER JOIN travailler_surs as ts ON ts.equipe_id = eq.id WHERE ts.contrat_client_id = ? AND ts.\"participationTerminee\"=false", @contrat.id])
+      if @client
+        if @client.type=='Entreprise'
+          @name=@client.nomEntreprise.capitalize
+        else
+          @name=@client.nomP.to_s.capitalize+" "+@client.prenomP.to_s.capitalize
+        end
+      end
+      @employes=Employe.joins(:participe2s).where("participe2s.contrat_client_id = ? AND participe2s.\"participationEmployeTerminee\" = false",params[:id])
     end
 
     def new

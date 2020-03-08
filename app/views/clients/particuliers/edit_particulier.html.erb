@@ -1,4 +1,4 @@
-<%= link_to "Retour", accueil_path %>
+<%= link_to "Retour",client_path, class: "btn btn-dark" %>
 <h1>Changer les informations de <%= @particulier.nomP %> <%= @particulier.prenomP %> </h1>
 
 <% if @particulier.errors.any? %>
@@ -15,20 +15,31 @@
   </div>
 <% end %>
 <%= form_with(model: @particulier,local: true, url: client_path) do |f| %>
+
+  <div class="form-group">
   <%= label_tag :particulier_nomP, "Nom" %>
-  <%= f.text_field :nomP %>
+  <%= f.text_field :nomP, class: "form-control" %>
+  </div>
 
+  <div class="form-group">
   <%= label_tag :particulier_prenomP, "Prénom" %>
-  <%= f.text_field :prenomP %>
+  <%= f.text_field :prenomP, class: "form-control" %>
+</div>
 
+  <div class="form-group">
   <%= label_tag :particulier_adresseC, "Adresse" %>
-  <%= f.text_field :adresseC %>
+  <%= f.text_field :adresseC, class: "form-control" %>
+</div>
 
+  <div class="form-group">
   <%= label_tag :particulier_mailC, "Adresse mail" %>
-  <%= f.email_field :mailC %>
+  <%= f.email_field :mailC, class: "form-control" %>
+</div>
 
+  <div class="form-group">
   <%= label_tag :particulier_numTelC, "Numéro de téléphone" %>
-  <%= f.text_field :numTelC %>
+  <%= f.text_field :numTelC, class: "form-control" %>
+</div>
 
    <%= f.submit %>
 <% end %>

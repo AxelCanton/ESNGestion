@@ -1,4 +1,4 @@
-
+<%= link_to "Retour", clients_path, class: "btn btn2 btn-dark" %>
 <h1>Nouveau client</h1>
 
 <h2>Entreprise</h2>
@@ -19,23 +19,30 @@
 <% end %>
 <%= form_with scope: :entreprise, url: 'entreprises', local: true do |f| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <div class="form-group">
    <%= label_tag :entreprise_nomEntreprise, "Nom" %>
-   <%= f.text_field :nomEntreprise %>
-
+   <%= f.text_field :nomEntreprise, class: "form-control" %>
+</div>
+  <div class="form-group">
    <%= label_tag :entreprise_numSiret, "Numéro Siret" %>
-   <%= f.text_field :numSiret %>
-
+   <%= f.text_field :numSiret, class: "form-control" %>
+</div>
+  <div class="form-group">
    <%= label_tag :entreprise_adresseC, "Adresse" %>
-   <%= f.text_field :adresseC %>
-
+   <%= f.text_field :adresseC, class: "form-control" %>
+</div>
+  <div class="form-group">
    <%= label_tag :entreprise_mailC, "Adresse mail" %>
-   <%= f.email_field :mailC %>
-
+   <%= f.email_field :mailC, class: "form-control" %>
+</div>
+  <div class="form-group">
    <%= label_tag :entreprise_numTelC, "Numéro de téléphone" %>
-   <%= f.phone_field :numTelC %>
-
+   <%= f.phone_field :numTelC, class: "form-control" %>
+</div>
+  <div class="form-group">
    <%= label_tag :entreprise_nomReferent, "Nom référent" %>
-   <%= f.text_field :nomReferent %>
+   <%= f.text_field :nomReferent, class: "form-control" %>
+</div>
 
    <%= f.submit %>
 <% end %>
@@ -58,21 +65,25 @@
 <% end %>
 <%= form_with scope: :particulier, url: 'particuliers', local: true do |f| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <div class="form-group">
    <%= label_tag :particulier_nomP, "Nom" %>
-   <%= f.text_field :nomP %>
-
+   <%= f.text_field :nomP, class: "form-control" %>
+  </div>
+    <div class="form-group">
    <%= label_tag :particulier_prenomP, "Prénom" %>
-   <%= f.text_field :prenomP %>
-
+   <%= f.text_field :prenomP, class: "form-control" %>
+  </div>
+    <div class="form-group">
    <%= label_tag :particulier_adresseC, "Adresse" %>
-   <%= f.text_field :adresseC %>
-
+   <%= f.text_field :adresseC, class: "form-control" %>
+  </div>
+    <div class="form-group">
    <%= label_tag :particulier_mailC, "Adresse mail" %>
-   <%= f.email_field :mailC %>
-
+   <%= f.email_field :mailC, class: "form-control" %>
+  </div>
+    <div class="form-group">
    <%= label_tag :particulier_numTelC, "Numéro de téléphone" %>
-   <%= f.text_field :numTelC %>
-
+   <%= f.text_field :numTelC, class: "form-control" %>
+  </div>
    <%= f.submit %>
 <% end %>
-<%= link_to "Retour", clients_path %>

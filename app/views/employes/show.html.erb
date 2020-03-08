@@ -1,7 +1,7 @@
 <% if @current_user.estAdmin == true %>
-  <%= link_to "Retour", employes_path %>
+  <%= link_to "Retour", employes_path, class: "btn btn2 btn-dark" %>
 <% end %>
-<header><h1><%= @employe.nome %> <%=@employe.prenome %></h1></header>
+<header><h1><%= @employe.nome.capitalize %> <%=@employe.prenome.capitalize %></h1></header>
 <main>
   <p>Age : <%= @employe.ageE.to_i %></p>
   <p>Adresse email : <%= @employe.email %></p>
@@ -19,16 +19,22 @@
     <% end %>
 </p>
 <p>Salaire brut :
-<%= @employe.salaireBrut.to_i %>
+<%= @employe.salaireBrut.to_i %> €
 </p>
 
-<% if @current_user.estAdmin == true %>
-  <%= link_to "Modifier les informations", edit_employe_path %>
+
+<% if @current_user.estAdmin %>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <%= link_to "Modifier les informations", edit_employe_path, class: "btn btn-secondary" %>
+
+  <% if @contratActuel.empty? %>
+    <%= link_to "Mettre l'employé sur un contrat", @employe.id.to_s+"/ajout_contrat", class: "btn btn-secondary" %>
+    <%= link_to "Envoyer l'employé en mission",  @employe.id.to_s+"/ajout_mission", class: "btn btn-secondary" %>
+  <% end %>
+  </div>
 <% end %>
-  <% if @contratActuel.empty? && @current_user.estAdmin == true %>
-    <%= link_to "Mettre l'employé sur un contrat", @employe.id.to_s+"/ajout_contrat" %>
-    <%= link_to "Envoyer l'employé en mission",  @employe.id.to_s+"/ajout_mission" %>
-  <% else %>
+  <% if !@contratActuel.empty? %>
+
     <h2>Contrat client actuel</h2>
     Logiciel : <%= @contratActuel[0].nomLogiciel %> du client
     <% if @contratActuel[0].type=='Entreprise' %>
@@ -39,18 +45,27 @@
     <% if !@mission.nil? %>
       <p>En mission à l'adresse suivante : <%= @mission.adresseM %>
     <% end %>
-    <h4>Finir la participation au contrat de cet employé</h4>
-    <%= form_with(model: @participe,local: true,url: @employe.id.to_s+"/termine",method: :patch) do |f| %>
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-      <%= label_tag :participe2_dateFin,"Date de fin" %>
-      <%= f.date_field :dateFin %>
-      <%= f.submit "Enregistrer" %>
+
+    <% if @current_user.estAdmin %>
+      <h5>Finir la participation au contrat de cet employé</h5>
+      <%= form_with(model: @participe,local: true,url: @employe.id.to_s+"/termine",method: :patch) do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="form-group">
+        <%= label_tag :participe2_dateFin,"Date de fin" %>
+        <%= f.date_field :dateFin, class: "form-control" %>
+      </div>
+        <%= f.submit "Enregistrer" %>
+      <% end %>
     <% end %>
   <% end %>
 
 <h2>Liste des anciens contrats</h2>
 <% if @contratsAnciens.empty? %>
-  <p>Cet employé n'a participé à aucun contrat.</p>
+  <% if @current_user.estAdmin == true %>
+    <p>Cet employé n'a participé à aucun contrat.</p>
+  <% else %>
+    <p>Vous n'avez participé à aucun contrat </p>
+  <% end %>
 <% else %>
   <table>
     <tr>
@@ -61,7 +76,7 @@
     <tr>
       <td><%= cont.nomLogiciel %></td>
       <td><%= cont.dateFin.to_date   %></td>
-      <td><%= link_to "Détail client", client_path(cont.client_id) %></td>
+      <td><%= link_to "Détail client", client_path(cont.client_id), class: "btn btn-info" %></td>
     </tr>
     <% end %>
   </table>

@@ -1,3 +1,4 @@
+  <%= link_to "Retour", employe_path(params[:id]), class: "btn btn2 btn-dark" %>
 <h1>Changer les informations de <%= @employe.nome %> <%= @employe.prenome %></h1>
 
 <% if @employe.errors.any? %>
@@ -14,27 +15,34 @@
   </div>
 <% end %>
 <%= form_with(model: @employe,local: true) do |f| %>
+<div class="form-group">
    <%= label_tag :employe_ageE, "Age" %>
-   <%= f.text_field :ageE %>
-
+   <%= f.text_field :ageE, class: "form-control" %>
+    </div>
+    <div class="form-group">
    <%= label_tag :employe_email, "Adresse mail" %>
-   <%= f.email_field :email %>
-
+   <%= f.email_field :email, class: "form-control" %>
+    </div>
+    <div class="form-group">
    <%= label_tag :employe_numTelE, "Numéro de téléphone" %>
-   <%= f.text_field :numTelE %>
-
+   <%= f.text_field :numTelE, class: "form-control" %>
+    </div>
+    <div class="form-group">
    <%= label_tag :employe_adresseE, "Adresse" %>
-   <%= f.text_area :adresseE %>
+   <%= f.text_area :adresseE, class: "form-control" %>
+    </div>
    <p>Contrat</p>
+   <div class="form-group">
    <%= label_tag :employe_dateFinE, 'Date de fin' %>
-   <%= f.date_field :dateFinE %>
-
+   <%= f.date_field :dateFinE, class: "form-control" %>
+    </div>
+    <div class="form-group">
    <%= label_tag :employe_intituleContrat, "Intitulé" %>
-   <%= f.text_field :intituleContrat %>
-
+   <%= f.text_field :intituleContrat, class: "form-control" %>
+    </div>
+    <div class="form-group">
    <%= label_tag :employe_salaireBrut, "Salaire brut" %>
-   <%= f.text_field :salaireBrut %>
-
-   <%= f.submit %>
+   <%= f.text_field :salaireBrut, class: "form-control" %>
+    </div>
+   <%= f.submit "Mettre à jour" %>
 <% end %>
-  <%= link_to "Retour", employes_path %>

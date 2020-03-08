@@ -1,21 +1,25 @@
-<h1>ESN Gestion</h1>
+  <h1>ESN Gestion</h1>
 
 
-<h2>Page de connection</h2>
+  <h2>Page de connection</h2>
 
-<%= form_with scope: :employe, url: "/sign_in", local: true do |f| %>
-<%= label_tag :email, "Adresse mail" %>
-<%= f.text_field :email %>
+  <%= form_with scope: :employe, url: "/sign_in", local: true do |f| %>
+  <div class="form-group">
+    <%= label_tag :email, "Adresse mail" %>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
 
-<%= label_tag :password, "Mot de passe" %>
-<%= f.password_field :password %>
-<%= f.submit %>
-<% end %>
-
-<% if !@error.nil? %>
-  <%if @error=="email" %>
-    <p>Adresse mail incorrect</p>
-  <% else %>
-    <p>Mot de passe incorrect</p>
+  <div class="form-group">
+      <%= label_tag :password, "Mot de passe" %>
+      <%= f.password_field :password, class: "form-control" %>
+  </div>
+  <%= f.submit %>
   <% end %>
-<% end %>
+
+  <% if !@error.nil? %>
+    <%if @error=="email" %>
+      <p>Adresse mail incorrect</p>
+    <% else %>
+      <p>Mot de passe incorrect</p>
+    <% end %>
+  <% end %>

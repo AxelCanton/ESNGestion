@@ -1,12 +1,11 @@
+<%= link_to "Retour", equipes_path, class: "btn btn2 btn-dark" %>
 <h1>Informations de l'équipe <%= @equipe.nomEquipe %></h1>
-<%= link_to "Retour", equipes_path %>
-<%= link_to "Modifier les informations", edit_equipe_path %>
   <h2>Chef d'équipe</h2>
   <% if @equipe.employe.nil? %>
   <p>Aucun chef d'équipe</p>
   <% else %>
     <%= @equipe.employe.nome %> <%= @equipe.employe.prenome %>
-    <%= link_to "Informations", employe_path(@equipe.employe) %>
+    <%= link_to "Informations", employe_path(@equipe.employe), class: "btn btn-info" %>
   <% end %>
 
 
@@ -23,7 +22,7 @@
     <tr>
       <td><%= emp.nome %></td>
       <td><%= emp.prenome %></td>
-      <td><%= link_to "Informations", employe_path(emp) %></td>
+      <td><%= link_to "Informations", employe_path(emp), class: "btn btn-info" %></td>
     </tr>
   <% end %>
 <% end %>
@@ -40,8 +39,12 @@
     <% @contratsActuels.each do |cont| %>
     <tr>
       <td><%=cont.nomLogiciel %></td>
-      <td><%= link_to "Détail", client_path(Client.find(cont.client_id)) %></td>
-
+      <td><% if cont.client_id %>
+          <%= link_to "Détail", client_path(cont.client_id), class: "btn btn-info" %>
+        <% else %>
+          Client supprimé
+        <% end %>
+        </td>
     <% end %>
   </table>
   <% end %>
@@ -58,8 +61,14 @@
     <% @contratsAnciens.each do |cont| %>
     <tr>
       <td><%= cont.nomLogiciel %></td>
-        <td><%= link_to "Détail client", client_path(Client.find(cont.client_id)) %></td>
+        <td><% if cont.client_id %>
+              <%= link_to "Détail client", client_path(cont.client_id), class: "btn btn-info" %>
+            <% else %>
+              Client supprimé
+            <% end %>
+    </td>
     </tr>
     <% end %>
   </table>
   <% end %>
+  <%= link_to "Modifier les informations", edit_equipe_path, class: "btn btn-secondary" %>

@@ -8,6 +8,19 @@ class TypeServicesController < ApplicationController
     @services=TypeService.all
   end
 
+  def edit
+    @service=TypeService.find(params[:id])
+  end
+
+  def update
+    @service=TypeService.find(params[:id])
+    if @service.update(param_service)
+      redirect_to type_services_path
+    else
+      render 'edit'
+    end
+  end
+
   def create
     @service=TypeService.new(param_service)
 
@@ -27,6 +40,6 @@ class TypeServicesController < ApplicationController
 
   private
     def param_service
-      params.require(:typeService).permit(:libelleType)
+      params.require(:type_service).permit(:libelleType)
     end
 end

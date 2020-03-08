@@ -1,40 +1,24 @@
-<h1>Changer les informations de <%= @employe.nomE %> <%= @employe.prenomE %></h1>
+  <%= link_to "Retour", type_services_path, class: "btn btn2 btn-dark" %>
+<h1>Changer le nom du service : <%= @service.libelleType %></h1>
 
-<% if @employe.errors.any? %>
+<% if @service.errors.any? %>
   <div id="error_explanation">
     <h2>
-      <%= pluralize(@employe.errors.count, "error") %> prohibited
+      <%= pluralize(@service.errors.count, "error") %> prohibited
       this employe from being saved:
     </h2>
     <ul>
-      <% @employe.errors.full_messages.each do |msg| %>
+      <% @service.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
-<%= form_with(model: @employe,local: true) do |f| %>
-   <%= label_tag :employe_ageE, "Age" %>
-   <%= f.text_field :ageE %>
+<%= form_with(model: @service,local: true) do |f| %>
+<div class="form-group">
+   <%= label_tag :type_service_libelleType, "Type de service" %>
+   <%= f.text_field :libelleType, class: "form-control" %>
+  </div>
 
-   <%= label_tag :employe_mailE, "Adresse mail" %>
-   <%= f.email_field :mailE %>
-
-   <%= label_tag :employe_numTelE, "Numéro de téléphone" %>
-   <%= f.text_field :numTelE %>
-
-   <%= label_tag :employe_adresseE, "Adresse" %>
-   <%= f.text_area :adresseE %>
-   <p>Contrat</p>
-   <%= label_tag :employe_dateFinE, 'Date de fin' %>
-   <%= f.date_field :dateFinE %>
-
-   <%= label_tag :employe_intituleContrat, "Intitulé" %>
-   <%= f.text_field :intituleContrat %>
-
-   <%= label_tag :employe_salaireBrut, "Salaire brut" %>
-   <%= f.text_field :salaireBrut %>
-
-   <%= f.submit %>
+   <%= f.submit "Enregistrer" %>
 <% end %>
-  <%= link_to "Retour", employes_path %>

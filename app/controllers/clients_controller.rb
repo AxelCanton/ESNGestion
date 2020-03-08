@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
-  before_action :verif_admin
+  before_action :verif_admin, :except => [:show]
+  before_action :verif_connecte, :only => [:show]
 
   def index
 
@@ -96,5 +97,11 @@ class ClientsController < ApplicationController
     end
     def param_entreprise
       params.require(:entreprise).permit(:nomEntreprise, :numSiret, :adresseC, :mailC, :numTelC, :nomReferent)
+    end
+
+    def verif_connecte
+      if !@current_user
+        return head :forbidden
+      end
     end
 end

@@ -1,3 +1,4 @@
+<%= link_to "Retour", clients_path, class: "btn btn2 btn-dark" %>
 <% if @client.type=='Particulier' %>
   <header><h1><%= @client.nomP %> <%=@client.prenomP%></h1></header>
   <main>
@@ -5,8 +6,7 @@
     <p>Numéro de téléphone : <%= @client.numTelC %></p>
     <p>Adresse : <%= @client.adresseC %></p>
 
-    <%= link_to "Modifier les informations", edit_client_path %>
-    <%= link_to "Retour", clients_particuliers_path %>
+    <%= link_to "Modifier les informations", edit_client_path, class: "btn btn-secondary" %>
 
   </main>
 
@@ -19,8 +19,7 @@
     <p>Adresse : <%= @client.adresseC %></p>
     <p>Nom référent : <%= @client.nomReferent %></p>
 
-    <%= link_to "Modifier les informations", edit_client_path %>
-    <%= link_to "Retour", clients_entreprises_path %>
+    <%= link_to "Modifier les informations", edit_client_path, class: "btn btn-secondary" %>
 
   </main>
 <% else %>

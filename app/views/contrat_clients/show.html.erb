@@ -1,8 +1,15 @@
-<%= link_to "Retour", contrat_clients_path %>
+<%= link_to "Retour", contrat_clients_path, class: "btn btn2 btn-dark" %>
 
-<h1>Informations sur le contrat concernant le logiciel <%= @contrat.nomLogiciel %> du client <%= link_to @name, client_path(@client) %> </h1>
+<h1>Informations sur le contrat concernant le logiciel <%= @contrat.nomLogiciel %>
+  <% if @client %>
+    du client <%= link_to @name, client_path(@client) %>
+  <% else %>
+  (le client a été supprimé)
+  <% end %>
+ </h1>
 <p>Nom du logiciel : <%= @contrat.nomLogiciel %> </p>
-<p>Prix : <%= @contrat.prixContrat %> </p>
+<p>Prix : <%= @contrat.prixContrat.to_i %> </p>
+<p>Type de service : <%= @service %></p>
 
 
 <% if @equipes.empty? %>
@@ -17,12 +24,29 @@
   <% @equipes.each do |eq| %>
     <tr>
       <td><%= eq.nomEquipe %></td>
-      <td><%= link_to "Informations", equipe_path(eq) %></td>
+      <td><%= link_to "Informations", equipe_path(eq), class: "btn btn-info" %></td>
     </tr>
   <% end %>
 <% end %>
 </table>
 
-<h2>Liste des employés sur le contrat</h2>
+<% if @employes.empty? %>
+  <h2>Pas d'employés sur ce contrat</h2>
+<% else %>
+  <h2>Liste des employés sur le contrat</h2>
+  <table>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+    </tr>
+  <% @employes.each do |emp| %>
+    <tr>
+      <td><%= emp.nome.capitalize %></td>
+      <td><%= emp.prenome.capitalize %></td>
+      <td><%= link_to "Informations", employe_path(emp), class: "btn btn-info" %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
 
-<%= link_to("Contrat terminé", @contrat.id.to_s+"/termine", method: :patch, data: {confirm: "Êtes-vous sûr ?"}) %>
+<%= link_to("Contrat terminé", @contrat.id.to_s+"/termine", method: :patch, data: {confirm: "Êtes-vous sûr ?"},class: "btn btn-danger") %>

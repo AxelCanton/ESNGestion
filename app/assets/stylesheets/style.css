@@ -1,0 +1,30 @@
+.btn{
+	margin-bottom:20px;
+	margin-top:20px;
+}
+
+td,th {
+	height:30px;
+	min-width:200px;
+}
+
+form {
+	margin-bottom:30px;
+}
+
+th{
+	font-size:1.4em;
+}
+
+.affichage_client{
+	padding-left:20px;
+
+}
+
+table{
+	margin-bottom:20px;
+}
+
+h2,h5{
+	margin-top:20px;
+}

@@ -1,4 +1,13 @@
-<%= link_to "Particuliers", clients_particuliers_path %>
-<%= link_to "Entreprises", clients_entreprises_path %>
-<%= link_to "Nouveau client", new_client_path %>
-<%= link_to "Retour", root_path %>
+<%= link_to "Retour", accueil_path, class: "btn btn2 btn-dark" %>
+
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <%= link_to "Liste des particuliers", clients_particuliers_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Liste des entreprises", clients_entreprises_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Nouveau client", new_client_path, class: "nav-link" %>
+  </li>
+</ul>

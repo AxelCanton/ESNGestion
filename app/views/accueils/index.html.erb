@@ -1,8 +1,20 @@
 <h1>Accueil ESN Gestion</h1>
 
 
-<%= link_to "Gestion clients", clients_path %>
-<%= link_to "Gestion employés", employes_path %>
-<%= link_to "Gestion contrats client", contrat_clients_path %>
-<%= link_to "Ajouter un type de service proposé", type_services_path %>
-<%= link_to "Gestion des équipes", equipes_path %>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <%= link_to "Gestion clients", clients_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Gestion employés", employes_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Gestion contrats client", contrat_clients_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Gestion des services proposés", type_services_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Gestion des équipes", equipes_path, class: "nav-link" %>
+    </li>
+  </ul>

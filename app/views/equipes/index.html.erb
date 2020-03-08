@@ -1,25 +1,25 @@
-<%= link_to "Retour", accueil_path %>
+<%= link_to "Retour", accueil_path, class: "btn btn2 btn-dark" %>
 <h1>Liste des équipes</h1>
 
   <table>
     <tr>
-      <th>Nom équipe<th>
+      <th>Nom équipe</th>
       <th>Chef d'équipe</th>
     </tr>
     <% @equipes.each do |eq| %>
       <tr>
-        <td><%= eq.nomEquipe %>
+        <td><%= eq.nomEquipe %></td>
           <td>
           <% if eq.employe.present? %>
             <%= eq.employe.nome %> <%= eq.employe.prenome %>
           <% end %>
           </td>
-          <td><%= link_to "Informations", equipe_path(eq) %></td>
-          <td><%= link_to 'Supprimer', equipe_path(eq),
+          <td><%= link_to "Informations", equipe_path(eq), class: "btn btn-info" %>
+            <%= link_to 'Supprimer', equipe_path(eq),
                   method: :delete,
-                  data: { confirm: 'Êtes-vous sûr ?' } %></td>
+                  data: { confirm: 'Êtes-vous sûr ?' }, class: "btn btn-danger" %></td>
       <tr>
     <% end %>
   </table>
 
-<%= link_to "Nouvelle équipe", new_equipe_path %>
+<%= link_to "Nouvelle équipe", new_equipe_path, class: "btn btn-secondary" %>

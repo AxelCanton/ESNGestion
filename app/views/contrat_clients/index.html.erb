@@ -1,4 +1,4 @@
-
+<%= link_to "Retour", accueil_path, class: "btn btn2 btn-dark" %>
 <h1>Liste des contrats</h1>
 
 <table>
@@ -7,7 +7,7 @@
     <th>Client</th>
   </tr>
   <tr>
-      <th>Particuliers</th>
+      <th class=affichage_client>Particuliers</th>
   </tr>
   <% if @contratParticulier.empty? %>
     <tr><td>Pas de contrat avec un particulier.</td><tr>
@@ -15,32 +15,46 @@
     <% @contratParticulier.each do |c| %>
       <tr>
         <td><%= c.nomLogiciel %></td>
-        <td><%= c.client.nomP %></td>
-        <td><%= c.client.prenomP %></td>
-        <td><%= link_to 'Informations', contrat_client_path(c) %></td>
-        <td><%= link_to 'Supprimer', contrat_client_path(c),
+        <td><%= c.client.nomP.capitalize %> <%= c.client.prenomP.capitalize %></td>
+        <td><%= link_to 'Informations', contrat_client_path(c),class: "btn btn-info" %>
+        <%= link_to 'Supprimer', contrat_client_path(c),
                 method: :delete,
-                data: { confirm: 'Êtes-vous sûr ?' } %></td>
+                data: { confirm: 'Êtes-vous sûr ?' },class: "btn btn-danger" %></td>
       </tr>
     <% end %>
   <% end %>
   <tr>
-    <th>Entreprises</th>
+    <th class=affichage_client>Entreprises</th>
   </tr>
   <% if @contratEntreprise.empty? %>
     <tr><td>Pas de contrat avec une entreprise.</td></tr>
-    <% else %>
+  <% else %>
       <% @contratEntreprise.each do |c| %>
         <tr>
           <td><%= c.nomLogiciel %></td>
           <td><%= c.client.nomEntreprise %></td>
-          <td><%= link_to 'Informations', contrat_client_path(c) %></td>
-          <td><%= link_to 'Supprimer', contrat_client_path(c),
+          <td><%= link_to 'Informations', contrat_client_path(c),class: "btn btn-info" %>
+          <%= link_to 'Supprimer', contrat_client_path(c),
                   method: :delete,
-                  data: { confirm: 'Êtes-vous sûr ?' } %></td>
+                  data: { confirm: 'Êtes-vous sûr ?' },class: "btn btn-danger" %></td>
         </tr>
       <% end %>
   <% end %>
+
+    <% if @clientSupprime %>
+    <tr>
+    <th class=affichage_client>Contrats dont les clients ont été supprimés</th>
+    </tr>
+      <% @clientSupprime.each do |c| %>
+        <tr>
+          <td><%= c.nomLogiciel %></td>
+          <td><%= link_to 'Supprimer', contrat_client_path(c),
+                    method: :delete,
+                    data: { confirm: 'Êtes-vous sûr ?' },class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+    <% end %>
+
 </table>
 
 <h2>Liste des contrats terminés</h2>
@@ -51,10 +65,15 @@
   <% @contratsTermines.each do |cont| %>
   <tr>
     <td><%= cont.nomLogiciel %></td>
-    <td><%= link_to "Détail client", client_path(cont.client.id) %></td>
+    <td><% if cont.client %>
+          <%= link_to "Détail client", client_path(cont.client.id),class: "btn btn-info" %>
+        <% else %>
+          Client supprimé
+        <% end %>
+    </td>
   </tr>
+
   <% end %>
 </table>
 
-<%= link_to "Nouveau contrat", new_contrat_client_path %>
-<%= link_to "Retour", root_path %>
+<%= link_to "Nouveau contrat", new_contrat_client_path, class: "btn btn-secondary" %>

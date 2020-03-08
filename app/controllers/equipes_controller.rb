@@ -1,5 +1,5 @@
 class EquipesController < ApplicationController
-  before_action :verif_admin  
+  before_action :verif_admin
   def index
     @equipes=Equipe.all
   end
@@ -33,8 +33,8 @@ class EquipesController < ApplicationController
     #Liste des contrats auquels l'équipe particpe et l'id de la relation (pour pouvoir supprimer)
     @contrats=ContratClient.joins(:travailler_surs).where("travailler_surs.equipe_id = ? AND \"participationTerminee\"=false",@equipe.id).select("contrat_clients.*,travailler_surs.id as id_ts, equipe_id")
 
-    #Liste des contrats auquels l'équipe ne participe pas
-    @contratsDispo=ContratClient.where("termine=false AND id NOT IN (SELECT contrat_client_id FROM travailler_surs WHERE equipe_id = ?)", @equipe.id)
+    #Liste des contrats non terminés auquels l'équipe ne participe pas
+    @contratsDispo=ContratClient.left_outer_joins(:travailler_surs).where("termine=false AND contrat_clients.id NOT IN (SELECT contrat_client_id FROM travailler_surs WHERE equipe_id = ?)", @equipe.id).select("contrat_clients.*,travailler_surs.contrat_client_id,travailler_surs.equipe_id")
   end
 
   def create
@@ -79,7 +79,7 @@ class EquipesController < ApplicationController
 
   end
 
-  #Ajoute un contrat à l'équipe
+  #Ajoute un l'équipe à un contrat
   def add_contrat
     @idContrat=ajout_contrat['contrat']
     @idEquipe=params[:id]
@@ -121,7 +121,7 @@ class EquipesController < ApplicationController
         params.require(:equipe).permit(:employe_id)
     end
     def ajout_contrat
-      params.require(:travailler_surs).permit(:contrat)
+      params.require(:contrat_client).permit(:contrat)
     end
     def supp_contrat
       params.require(:ts).permit(:id_ts, :id_eq)

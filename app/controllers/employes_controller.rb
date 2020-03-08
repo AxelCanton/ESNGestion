@@ -37,8 +37,8 @@ class EmployesController < ApplicationController
     @employe.estValide=false
 
     if @employe.save
-      #Envoi d'un mail contenant le mdp au mail du nouvel employé
-      EmployeMailer.with(email: @employe.email,mdp: mdp).nv_employe.deliver_now
+      #Envoi d'un mail contenant le mdp au mail du nouvel employé (ne fonctionne pas)
+      #EmployeMailer.with(email: @employe.email,mdp: mdp).nv_employe.deliver_now
       redirect_to @employe
     else
       render 'new'
