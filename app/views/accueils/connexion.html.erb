@@ -1,5 +1,6 @@
 <h1>ESN Gestion</h1>
 
+
 <h2>Page de connection</h2>
 
 <%= form_with scope: :employe, url: "/sign_in", local: true do |f| %>
@@ -9,4 +10,12 @@
 <%= label_tag :password, "Mot de passe" %>
 <%= f.password_field :password %>
 <%= f.submit %>
+<% end %>
+
+<% if !@error.nil? %>
+  <%if @error=="email" %>
+    <p>Adresse mail incorrect</p>
+  <% else %>
+    <p>Mot de passe incorrect</p>
+  <% end %>
 <% end %>

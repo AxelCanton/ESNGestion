@@ -8,10 +8,10 @@ class SessionsController < ApplicationController
     employe=Employe.where(email: param['email']).first
     if employe.nil?
       @error="email"
-      render :template => "accueil/connexion.html.erb"
+      render :template => "accueils/connexion.html.erb"
     elsif employe.encrypted_password != secure_hash(param['password'])
       @error="mdp"
-      render :template => "clients/particuliers/index.html.erb"
+      render :template => "accueils/connexion.html.erb"
     else
       session[:user_id]=employe.id
       if employe.estAdmin
