@@ -4,7 +4,7 @@ class AccueilsController < ApplicationController
 
 
   def connexion
-
+    render layout: "connexion"
   end
 
 

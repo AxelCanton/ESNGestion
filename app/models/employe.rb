@@ -18,7 +18,7 @@ class Employe < ApplicationRecord
   validates :numTelE, length: {is: 10}
   validates :email, format: {with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i}
   validates :prenome, :nome, format: {with: /[a-zA-Z]+/i}
-  validates :numTelE, :nbAnneeExp, :salaireBrut, format: {with: /[0-9]+/i}
+  validates :numTelE, format: {with: /\A[0-9]+\z/i}
 
 
 

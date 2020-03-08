@@ -67,6 +67,14 @@ class EquipesController < ApplicationController
     redirect_to edit_equipe_path(@equipe)
   end
 
+  def update
+    @equipe=Equipe.find(params[:id])
+    if @equipe.update(param_equipe)
+      redirect_to @equipe
+    else
+      redirect_to @equipe
+    end
+  end
 
   #Ajout d'un chef d'équipe
   def add_chef

@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   post 'clients/particuliers', to: 'clients#create_particulier'
   post 'clients/entreprises', to: 'clients#create_entreprise'
 
-
+  get 'deconnection', to: 'sessions#destroy'
   get 'accueil', to: 'accueils#index'
   post '/sign_in', to: 'sessions#login'
   root 'accueils#connexion'

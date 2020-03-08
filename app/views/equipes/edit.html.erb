@@ -1,5 +1,9 @@
 <%= link_to "Retour", equipe_path, class: "btn btn2 btn-dark" %>
+
 <h1>Modifier les informations de l'équipe <%= @equipe.nomEquipe %></h1>
+
+
+
 <%= form_with model: @equipe, local: true do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="form-group">
@@ -30,7 +34,7 @@
     <% end %>
 <% else %>
 
-  #Si on veut désigner un nv chef d'équipe
+
   <h4>Chef d'équipe : <%= @chef.nome %> <%= @chef.prenome %></h4>
   <% if @employesDispo.empty? %>
     <p>Aucun employé de disponible pour remplacer le chef d'équipe</p>

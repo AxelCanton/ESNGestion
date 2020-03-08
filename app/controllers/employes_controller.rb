@@ -47,7 +47,6 @@ class EmployesController < ApplicationController
 
     def update
       @employe = Employe.find(params[:id])
-
         if @employe.update(param_employe)
           redirect_to @employe
         else
