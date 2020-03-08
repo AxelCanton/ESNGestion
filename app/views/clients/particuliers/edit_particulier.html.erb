@@ -1,3 +1,4 @@
+<%= link_to "Retour", accueil_path %>
 <h1>Changer les informations de <%= @particulier.nomP %> <%= @particulier.prenomP %> </h1>
 
 <% if @particulier.errors.any? %>
@@ -31,4 +32,3 @@
 
    <%= f.submit %>
 <% end %>
-  <%= link_to "Retour", client_path %>
